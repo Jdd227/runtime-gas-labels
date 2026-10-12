@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>RunTime Dive Systems | Gas Label Studio v3.1</title>
+<style>
+:root{--bg:#0e1217;--surface:#191f26;--surface2:#121820;--stroke:#343f4c;--muted:#aab6c4;--text:#f1f4f8;--orange:#f18a39;--field:#10161e;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--text);background:var(--bg)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;}body{background:linear-gradient(135deg,#171e26,#0e1217 60%)}
+.header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px max(18px,calc((100vw - 1440px)/2));border-bottom:1px solid var(--stroke);background:#11171d}.brandgroup{display:flex;gap:13px;align-items:center;min-width:0}.mark{background:var(--orange);border-radius:10px;padding:7px 11px;color:#12171c;font-size:24px;font-weight:1000}.brandtitle{font-weight:850;letter-spacing:.015em;font-size:20px}.brandtitle span{color:var(--orange)}.eyebrow{font-size:11px;letter-spacing:.14em;font-weight:850;color:#bac4ce;text-transform:uppercase}.headmeta{font-size:11px;line-height:1.5;white-space:nowrap;text-align:right;color:#a3adba}
+.shell{max-width:1460px;padding:20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.07fr);gap:18px;margin:auto;align-items:start}.panel{min-width:0;border:1px solid var(--stroke);border-radius:13px;background:var(--surface);padding:19px}.paneltop{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px}.paneltop h2{font-size:16px;margin:0}.subtle{font-size:11px;color:var(--muted)}.fieldset{border:0;margin:0;padding:0;min-width:0}.fieldset legend{color:var(--orange);font-size:11px;font-weight:900;letter-spacing:.11em;text-transform:uppercase;padding:0;margin-bottom:12px}.rule{height:1px;background:#303a45;margin:19px 0}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.fields.three{grid-template-columns:repeat(3,minmax(0,1fr))}.field{min-width:0}.field.full{grid-column:1/-1}.field label{display:block;margin:0 0 5px;font-size:11px;color:#c0cad4;letter-spacing:.045em;text-transform:uppercase;font-weight:780}input,select{appearance:auto;width:100%;max-width:100%;border:1px solid #3a4655;background:var(--field);color:#fff;border-radius:7px;padding:9px 11px;font:inherit;font-size:14px;min-width:0;min-height:42px}input:focus,select:focus{outline:2px solid var(--orange);outline-offset:0}input::placeholder{color:#778392}input[type=date]{color-scheme:dark}.wrapunit{position:relative}.wrapunit input{padding-right:47px}.wrapunit b{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:11px;color:#bac4cf;pointer-events:none}.hint{font-size:12px;color:var(--muted);margin:9px 0 0}.status{margin-top:10px;border:1px solid #565038;background:#25251d;border-radius:8px;padding:10px 12px;font-size:12px;color:#f2d6aa;overflow-wrap:anywhere}.status.neutral{border-color:#364353;background:#141b24;color:#becbd7}.buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:14px}.buttons.triple{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:9px}.buttons button{min-width:0;width:100%;font:inherit;font-size:12px;font-weight:770;padding:10px 8px;min-height:42px;cursor:pointer;color:#f2f4f6;background:#2b3542;border:1px solid #566475;border-radius:8px;white-space:normal}.buttons button:hover{filter:brightness(1.12)}.buttons .primary{background:var(--orange);border-color:var(--orange);color:#17191d}.buttons .outline{background:#291e16;border-color:var(--orange);color:#fdb26e}.buttons button:disabled{opacity:.48;cursor:wait}.footnote{color:var(--muted);font-size:11px;line-height:1.55;margin:10px 0 0;overflow-wrap:anywhere}
+.preview-panel{position:sticky;top:16px}.sizepill{font-size:10px;letter-spacing:.03em;font-weight:800;background:#332619;color:#ffc18a;border:1px solid #5c412b;border-radius:7px;padding:6px 8px;white-space:nowrap}.stage{width:100%;min-height:320px;background-color:#242d37;background-image:linear-gradient(#ffffff09 1px,transparent 1px),linear-gradient(90deg,#ffffff09 1px,transparent 1px);background-size:20px 20px;border:1px solid #3a4451;border-radius:10px;padding:20px;display:flex;justify-content:center;align-items:center;overflow:hidden}.mount{width:100%;display:flex;align-items:center;justify-content:center;min-width:0}.mount svg{max-width:100%;max-height:460px;width:auto;height:auto;background:#fff;box-shadow:0 16px 27px #05070970;display:block}.numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.metric{min-width:0;background:#10161d;border:1px solid #343f4b;border-radius:8px;padding:12px 10px}.metric small{font-size:10px;text-transform:uppercase;color:#aebac7;display:block}.metric strong{display:block;font-size:22px;letter-spacing:-.04em;margin-top:4px;overflow-wrap:anywhere}.metric strong.small{font-size:16px;padding-top:3px}.metric em{font-size:12px;font-style:normal;font-weight:500;color:#b4c0cb}.historyline{display:grid;gap:7px}.historyline button{min-width:0;width:100%;text-align:left;background:#111921;border:1px solid #344050;border-radius:7px;color:#e0e7ef;display:flex;justify-content:space-between;gap:10px;padding:9px 10px;font-size:12px}.historyline button span{overflow-wrap:anywhere}.historyline button span:last-child{font-size:10px;white-space:nowrap;color:#a6b2bf}.historyhead{display:flex;align-items:center;justify-content:space-between;gap:10px}.historyhead h3{font-size:14px;margin:0}.mini{border:1px solid #495666;background:transparent;color:#c2cdd7;font-size:11px;padding:6px;border-radius:6px;cursor:pointer}.note{margin:0;color:var(--muted);font-size:11px}
+
+.quickbar{max-width:1460px;margin:12px auto 0;padding:0 20px;min-width:0}.quicktest{border:1px solid #6a4c2c;background:#251f1a;border-radius:10px;padding:12px 14px;margin:0;min-width:0;display:grid;grid-template-columns:minmax(140px,.7fr) minmax(290px,1.55fr) minmax(240px,1.1fr);align-items:center;gap:14px}
+.quicktest-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:0;color:#ffd3a8;font-size:11px;letter-spacing:.06em}
+.pill-test,.testbadge{border:1px solid #59636d;border-radius:6px;padding:4px 8px;color:#b8c4d0;background:#151b22;font-size:10px;letter-spacing:.03em;font-weight:850;white-space:nowrap}
+.pill-test.on,.testbadge{background:#522714;border-color:#e98439;color:#fff1df}
+.testbadge[hidden]{display:none!important}
+.quicktest-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.quicktest-buttons button{border-radius:8px;border:1px solid #c97737;background:#342418;color:#ffcf9d;font:inherit;font-size:12px;font-weight:800;cursor:pointer;min-height:44px;padding:8px;min-width:0}
+.quicktest-buttons button:hover{background:#4b2b18}
+#testFeedback{font-size:11px;margin:0;color:#c0b2a3;overflow-wrap:anywhere;min-height:17px}
+#testFeedback.loaded{color:#ffcd98;font-weight:750}
+.previewtopright{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap;min-width:0}
+.panel,.stage,.metric,.field{min-width:0;overflow-wrap:anywhere}
+button{touch-action:manipulation}
+
+#pagePrint{display:none}
+@media(max-width:980px){.quicktest{grid-template-columns:1fr 1.4fr;row-gap:7px}.quicktest #testFeedback{grid-column:1/-1}.shell{grid-template-columns:1fr;max-width:720px}.preview-panel{position:static;order:-1}.stage{min-height:250px}.mount svg{max-height:390px}}
+@media(max-width:520px){.quickbar{margin:10px auto 0;padding:0 10px}.quicktest{grid-template-columns:1fr;gap:8px}.quicktest-buttons{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.quicktest #testFeedback{grid-column:1/-1}.quicktest-buttons button{font-size:11px}.header{padding:12px}.brandtitle{font-size:16px}.eyebrow{font-size:9px}.headmeta{display:none}.shell{padding:10px;gap:10px}.panel{padding:13px}.fields.three{grid-template-columns:repeat(2,minmax(0,1fr))}.stage{padding:10px;min-height:205px}.mount svg{max-height:290px}.metric{padding:8px 7px}.metric strong{font-size:18px}.metric strong.small{font-size:13px}.buttons.triple{grid-template-columns:1fr 1fr}.buttons.triple button:last-child{grid-column:1/-1}}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}html,body{background:#fff!important;padding:0!important;margin:0!important;width:100%!important;height:100%!important}body>*:not(#pagePrint){display:none!important}#pagePrint{display:block!important;position:absolute!important;inset:0!important;margin:0!important;padding:0!important;overflow:hidden!important}#pagePrint svg{display:block!important;width:100%!important;height:100%!important}}
+</style>
+<style id="pageRule">@page{size:4in 4in;margin:0}</style>
+</head>
+<body>
+<header class="header"><div class="brandgroup"><div class="mark">R</div><div><div class="eyebrow">RunTime Dive Systems</div><div class="brandtitle">GAS LABEL <span>STUDIO</span></div></div></div><div class="headmeta">ZD621 LABEL DESIGNER<br>OFFLINE · PRINT · PNG · ZPL</div></header>
+<div class="quickbar">
+  <div id="jsGate" role="status" aria-live="polite" style="border:1px solid #f18a39;border-radius:9px;background:#372314;color:#ffe0bc;padding:12px;margin-bottom:10px;font-weight:700">INTERACTIVE APP NOT RUNNING: This HTML is being shown in a file preview that blocks JavaScript. Open the hosted web page in Safari on iPhone, or open this downloaded file in Chrome/Edge on a computer.</div>
+  <div class="quicktest" role="group" aria-label="Load demonstration label">
+    <div class="quicktest-head"><strong>LOAD A TEST LABEL</strong><span class="pill-test" id="testPill">NO TEST LOADED</span></div>
+    <div class="quicktest-buttons"><button id="quickTrimix" type="button">18/45 Trimix TEST</button><button id="quickNitrox" type="button">EAN32 Nitrox TEST</button></div>
+    <div id="testFeedback" role="status" aria-live="polite">Choose a test above. Sample values will populate the editor and preview.</div>
+  </div>
+</div>
+<main class="shell">
+<section class="panel">
+  <div class="paneltop"><h2>Label editor</h2><span class="subtle">v3.1 · Safari-ready</span></div>
+
+  <form id="editor" novalidate onsubmit="return false">
+   <fieldset class="fieldset"><legend>Printer and label</legend><div class="fields three">
+    <div class="field"><label for="size">Stock size</label><select id="size"><option value="4x4">4 × 4 in</option><option value="2x2">2 × 2 in</option><option value="4x2">4 × 2 in</option><option value="3x2">3 × 2 in</option></select></div>
+    <div class="field"><label for="dpi">Print DPI</label><select id="dpi"><option value="203">203 DPI</option><option value="300">300 DPI</option></select></div>
+    <div class="field"><label for="style">Appearance</label><select id="style"><option value="high">High contrast</option><option value="light">Minimal</option></select></div>
+   </div></fieldset>
+   <div class="rule"></div>
+   <fieldset class="fieldset"><legend>Gas analysis</legend><div class="fields three">
+    <div class="field"><label for="gasMode">Gas family</label><select id="gasMode"><option value="auto">Auto detect</option><option value="nitrox">Nitrox</option><option value="trimix">Trimix</option><option value="air">Air</option><option value="oxygen">Oxygen</option></select></div>
+    <div class="field"><label for="oxygen">Measured O₂</label><div class="wrapunit"><input id="oxygen" type="number" step="any" inputmode="decimal" placeholder="e.g. 32.0"><b>%</b></div></div>
+    <div class="field"><label for="helium">Measured He</label><div class="wrapunit"><input id="helium" type="number" step="any" inputmode="decimal" placeholder="0 for nitrox"><b>%</b></div></div>
+   </div><div class="fields" style="margin-top:12px"><div class="field"><label for="ppo2">MOD ppO₂</label><select id="ppo2"><option value="0.7">0.7</option><option value="0.8">0.8</option><option value="0.9">0.9</option><option value="1.0">1.0</option><option value="1.1">1.1</option><option value="1.2">1.2</option><option value="1.3">1.3</option><option value="1.4">1.4</option><option value="1.5">1.5</option><option value="1.6">1.6</option></select></div><div class="field"><label for="labelStatus">Analysis note</label><select id="labelStatus"><option value="measured">Measured values</option><option value="planned">Planned / fill target</option><option value="blank">Blank label</option></select></div></div>
+   <p class="hint">Default MOD is calculated at 1.1 ppO₂ using 33 ft/ATA. Nitrox can have 0% or blank He. No print requirements.</p>
+   <div id="notice" class="status neutral" role="status" aria-live="polite"></div>
+   </fieldset>
+   <div class="rule"></div>
+   <fieldset class="fieldset"><legend>Cylinder details</legend><div class="fields">
+    <div class="field"><label for="cylinder">Cylinder ID</label><input id="cylinder" placeholder="AL80-07" maxlength="38"></div>
+    <div class="field"><label for="pressure">Pressure</label><div class="wrapunit"><input id="pressure" type="number" step="any" placeholder="3000" inputmode="decimal"><b>PSI</b></div></div>
+    <div class="field"><label for="date">Analysis date</label><input id="date" type="date"></div>
+    <div class="field"><label for="analyzer">Analyzed by</label><input id="analyzer" placeholder="Initials / name" maxlength="38"></div>
+    <div class="field full"><label for="note">Notes or intended use</label><input id="note" placeholder="CCR diluent / Bailout / Deco / EAN50" maxlength="85"></div>
+   </div></fieldset>
+   <div class="rule"></div>
+   <fieldset class="fieldset"><legend>Label text</legend><div class="fields">
+    <div class="field"><label for="headerText">Main heading</label><input id="headerText" maxlength="40" placeholder="GAS ANALYSIS"></div>
+    <div class="field"><label for="brandText">Brand</label><input id="brandText" maxlength="42" placeholder="RunTime Dive Systems"></div>
+   </div></fieldset>
+   <div class="buttons"><button id="print" type="button" class="primary">Print label</button><button id="zpl" type="button" class="outline">Download Zebra ZPL</button></div>
+   <div class="buttons triple"><button id="png" type="button">Save / share PNG</button><button id="demo" type="button">Load TEST label</button><button id="clear" type="button">Clear inputs</button></div>
+   <p class="footnote">Print with any amount of information, including completely blank fields. Invalid or missing gas readings leave the calculated MOD blank, not the Print button disabled. Use Print for your installed printer driver; download ZPL to send to the ZD621 using Zebra Setup Utilities or a compatible print service.</p>
+  </form>
+</section>
+<section class="panel preview-panel"><div class="paneltop"><h2>Live preview</h2><div class="previewtopright"><span id="previewTestBadge" class="testbadge" hidden>TEST ONLY</span><span id="dimensions" class="sizepill">4 × 4 IN</span></div></div>
+  <div class="stage"><div class="mount" id="preview" aria-label="Live label preview"></div></div>
+  <div class="numbers"><div class="metric"><small>Calculated MOD</small><strong id="modStat">—</strong></div><div class="metric"><small>Nitrogen</small><strong id="n2Stat">—</strong></div><div class="metric"><small>Gas type</small><strong class="small" id="typeStat">—</strong></div></div>
+  <p class="hint" id="renderStatus"></p>
+  <div class="rule"></div>
+  <div class="historyhead"><h3>Recent labels</h3><button type="button" id="clearHistory" class="mini">Clear history</button></div>
+  <div class="historyline" id="history" style="margin-top:10px"></div>
+  <p class="footnote">ZD621: set the printer's media dimensions to match the selected stock. Print at actual size (100%) with no margins. On iPhone open the hosted HTTPS site in Safari. The iPhone Files/ChatGPT HTML preview disables JavaScript, so controls there will not respond. Direct USB/Bluetooth printing is not provided by this standalone file.</p>
+</section>
+</main>
+<div id="pagePrint"></div>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const runtimeReady=()=>{const status=$('jsGate');if(status){status.textContent='APP ACTIVE · Buttons and live preview are running in this browser';status.style.borderColor='#2c755c';status.style.background='#142d28';status.style.color='#a7ead2';}};
+const fields=['size','dpi','style','gasMode','oxygen','helium','ppo2','labelStatus','cylinder','pressure','date','analyzer','note','headerText','brandText'];
+const settingsKey='runtime-gas-label-v3-settings',histKey='runtime-gas-label-v3-history';
+const dateToday=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const defaults={size:'4x4',dpi:'203',style:'high',gasMode:'auto',oxygen:'',helium:'',ppo2:'1.1',labelStatus:'measured',cylinder:'',pressure:'',date:dateToday(),analyzer:'',note:'',headerText:'GAS ANALYSIS',brandText:'RunTime Dive Systems'};
+const storeGet=k=>{try{return localStorage.getItem(k)}catch{return null}};
+const readJSON=(v,f)=>{try{const parsed=JSON.parse(v);return parsed??f}catch{return f}};
+const read=()=>Object.fromEntries(fields.map(id=>[id,$(id).value]));
+const setForm=data=>{for(const id of fields){if(data[id]!==undefined && data[id]!==null)$(id).value=String(data[id])}render()};
+const escapeXml=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const fmt=n=>Number.isFinite(n)?(Math.abs(n-Math.round(n))<.04?String(Math.round(n)):n.toFixed(1)):'—';
+const trim=s=>String(s??'').trim();
+const shortDate=s=>{const parts=trim(s).split('-');return parts.length===3?`${parts[1]}/${parts[2]}/${parts[0].slice(2)}`:'—'};
+let testMode=false,modelSVG='';
+let recent=readJSON(storeGet(histKey),[]);if(!Array.isArray(recent))recent=[];
+const normalizeNum=x=>trim(x)===''?null:Number(x);
+function analyse(m){
+ const o=normalizeNum(m.oxygen),h=normalizeNum(m.helium),p=Number(m.ppo2);
+ const hasO=o!==null && Number.isFinite(o),hasH=h!==null&&Number.isFinite(h);
+ const goodO=hasO&&o>0&&o<=100;
+ const goodH=!hasH||(h>=0&&h<=100);
+ const goodSum=goodO&&goodH&&o+(hasH?h:0)<=100.0000001;
+ const good=goodO&&goodH&&goodSum;
+ const he=hasH?h:0;
+ const n2=good?Math.max(0,100-o-he):null;
+ const mode=m.gasMode;
+ let autoType=he>0?'TRIMIX':goodO&&o>=99.5?'OXYGEN':goodO&&o>=20.5&&o<=21.5?'AIR':goodO&&o>21.5?'NITROX':goodO?'O₂ / N₂':'GAS';
+ let type=mode==='auto'?autoType:({nitrox:'NITROX',trimix:'TRIMIX',air:'AIR',oxygen:'OXYGEN'}[mode]||autoType);
+ let mix=good?he>0?`${fmt(o)}/${fmt(he)}`:o>=99.5?'O₂':o>=20.5&&o<=21.5?'AIR':`EAN${fmt(o)}`:'—';
+ let mod=good?Math.max(0,Math.floor(((p/(o/100))-1)*33+1e-8)):null;
+ let messages=[];
+ if(o===null)messages.push('O₂ not entered. Label can still print without a MOD.');
+ else if(!goodO)messages.push('O₂ must be above 0% and at most 100% for calculation.');
+ if(hasH&&!goodH)messages.push('He must be between 0% and 100% for calculation.');
+ if(goodO&&goodH&&!goodSum)messages.push('O₂ and He exceed 100%; MOD unavailable.');
+ if(good&&mode==='nitrox'&&he>0)messages.push('Nitrox is selected but He is above zero. Check the gas family.');
+ if(good&&mode==='trimix'&&he===0)messages.push('Trimix is selected but no helium was entered.');
+ if(good&&mode==='air'&&(he!==0||o<20.5||o>21.5))messages.push('Air is selected but the analyzed mix differs from air.');
+ if(good&&mode==='oxygen'&&o<99.5)messages.push('Oxygen is selected but O₂ is below 99.5%.');
+ if(good&&o<16)messages.push('Hypoxic mix: minimum breathing depth must be assessed separately.');
+ return {o:goodO?o:null,he:goodH&&hasH?he:null,n2,mod,good,type,mix,messages,mode};
+}
+const textCtx=document.createElement('canvas').getContext('2d');
+function svgMake(m,a){
+ const [wi,hi]=m.size.split('x').map(Number),W=wi*300,H=hi*300;
+ const dark=m.style==='high',black='#121212',paper='#fff',fg=dark?'#fff':black;
+ const el=[];
+ const rect=(x,y,w,h,fill,stroke='none',sw=0,rx=0)=>{el.push(`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}" rx="${rx}"/>`)};
+ const line=(x1,y1,x2,y2,sw=2)=>{el.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${black}" stroke-width="${sw}"/>`)};
+ function txt(x,y,value,size,maxWidth,opts={}){
+   const content=trim(value)||'—',fontSize=opts.minSize||size,weight=opts.weight||800,anchor=opts.anchor||'start',fill=opts.fill||black;
+   textCtx.font=`${weight} ${fontSize}px Arial`;
+   const measured=Math.max(1,textCtx.measureText(content).width);
+   const actual=Math.min(size,Math.max(opts.minSize||10,size*maxWidth/measured));
+   // If even the smallest size cannot fit, SVG textLength contains it in the assigned slot.
+   textCtx.font=`${weight} ${actual}px Arial`;
+   const newWidth=textCtx.measureText(content).width;
+   const adjust=newWidth>maxWidth?` textLength="${maxWidth}" lengthAdjust="spacingAndGlyphs"`:'';
+   el.push(`<text x="${x}" y="${y}" font-family="Arial,Helvetica,sans-serif" font-size="${actual.toFixed(2)}" font-weight="${weight}" text-anchor="${anchor}" fill="${fill}"${adjust}>${escapeXml(content)}</text>`);
+ }
+ const heading=trim(m.headerText)||'GAS ANALYSIS',brand=trim(m.brandText)||'RunTime Dive Systems';
+ const identifier=trim(m.cylinder)||'—',pressure=trim(m.pressure)===''?'—':`${trim(m.pressure)} PSI`;
+ const analysedBy=trim(m.analyzer)||'—',day=shortDate(m.date),note=trim(m.note)||'—';
+ const validO=a.o!==null?fmt(a.o):trim(m.oxygen)!==''?trim(m.oxygen):'—';
+ const validHe=a.he!==null?fmt(a.he):trim(m.helium)!==''?trim(m.helium):'—';
+ const mod=a.mod===null?'—':`${a.mod} FT`;
+ const inconsistent=a.good&&((m.gasMode==='nitrox'&&a.he>0)||(m.gasMode==='trimix'&&(!a.he||a.he<=0))||(m.gasMode==='oxygen'&&a.o<99.5)||(m.gasMode==='air'&&((a.he||0)>0||a.o<20.5||a.o>21.5)));
+ const incomplete=!a.good||inconsistent||m.labelStatus==='blank';
+ const statusLine=testMode?'TEST LABEL - NOT FOR DIVING':m.labelStatus==='planned'?'PLANNED MIX - VERIFY BY ANALYZER':incomplete?'INCOMPLETE - VERIFY GAS BEFORE USE':'VERIFY GAS BEFORE EACH DIVE';
+ rect(0,0,W,H,paper);rect(2,2,W-4,H-4,'none',black,3);
+ if(hi===2&&wi===2){
+   rect(2,2,W-4,59,dark?black:paper);if(!dark)line(18,62,W-18,62,3);
+   txt(20,40,heading,25,347,{fill:fg,minSize:13});
+   txt(W-20,40,brand,19,185,{anchor:'end',fill:fg,minSize:10});
+   txt(20,95,a.type,22,220,{minSize:12});txt(W-20,95,`ID: ${identifier}`,20,290,{anchor:'end',minSize:10});
+   if((a.he!==null&&a.he>0)||(trim(m.helium)!==''&&Number(m.helium)>0)){
+     txt(30,222,validO,105,244,{minSize:40});txt(325,222,validHe,105,244,{minSize:40});
+     txt(30,267,'O₂ %',20,244);txt(325,267,'He %',20,244);
+   }else{
+     txt(W/2,226,validO,119,505,{anchor:'middle',minSize:48});txt(W/2,266,'OXYGEN %',21,505,{anchor:'middle'});
+   }
+   rect(20,288,W-40,147,dark?black:paper,dark?'none':black,dark?0:4);
+   txt(36,323,'MAX OPERATING DEPTH',23,525,{fill:fg});
+   txt(38,411,mod,91,310,{fill:fg,minSize:42});
+   txt(W-35,402,`@ ${m.ppo2} ppO₂`,25,195,{fill:fg,anchor:'end',minSize:15});
+   const cols=[{x:25,w:169,l:'PRESSURE',v:pressure},{x:218,w:150,l:'DATE',v:day},{x:385,w:188,l:'ANALYZED BY',v:analysedBy}];
+   for(const c of cols){txt(c.x,468,c.l,15,c.w,{minSize:10});txt(c.x,502,c.v,25,c.w,{minSize:11})}
+   line(22,519,W-22,519,2);txt(24,550,note,22,W-48,{minSize:12});
+   rect(2,561,W-4,37,testMode?black:paper);
+   txt(W/2,587,statusLine,16,W-36,{anchor:'middle',fill:testMode?'#fff':black,minSize:11});
+ }else if(hi===2){
+   rect(2,2,W-4,65,dark?black:paper);if(!dark)line(22,70,W-22,70,4);
+   txt(24,43,heading,32,W*.52-34,{fill:fg,minSize:14});
+   txt(W-24,43,brand,26,W*.43-24,{anchor:'end',fill:fg,minSize:11});
+   const part=Math.round(W*.58);const right=part+22;const modW=W-right-22;
+   txt(27,111,a.type,25,part*.47,{minSize:13});txt(part-8,111,`ID: ${identifier}`,22,part*.49,{anchor:'end',minSize:12});
+   if((a.he!==null&&a.he>0)||(trim(m.helium)!==''&&Number(m.helium)>0)){
+     let mid=Math.round(part*.51);txt(27,290,validO,wi===3?126:151,mid-42,{minSize:37});
+     txt(mid+4,290,validHe,wi===3?126:151,part-mid-30,{minSize:37});
+     txt(30,363,'O₂ %',24,mid-45);txt(mid+8,363,'He %',24,part-mid-34);
+   }else{
+     txt(27,284,validO,175,part-60,{minSize:55});txt(30,363,'OXYGEN %',23,part-58);
+   }
+   rect(right,114,modW,273,dark?black:paper,dark?'none':black,dark?0:4);
+   txt(right+16,165,'MOD',38,modW-32,{fill:fg,minSize:20});
+   txt(right+16,278,mod,wi===3?80:104,modW-32,{fill:fg,minSize:30});
+   txt(right+16,334,`@ ${m.ppo2} ppO₂`,27,modW-32,{fill:fg,minSize:13});
+   txt(right+16,372,'FSW',22,modW-32,{fill:fg});
+   line(25,413,W-25,413,3);
+   const cx=[28,Math.round(W*.37),Math.round(W*.68)],colW=[Math.round(W*.31),Math.round(W*.27),Math.round(W*.28)];
+   const meta=[['PRESSURE',pressure],['DATE',day],['ANALYZED BY',analysedBy]];
+   meta.forEach((item,i)=>{txt(cx[i],450,item[0],19,colW[i],{minSize:11});txt(cx[i],498,item[1],35,colW[i],{minSize:13})});
+   txt(27,549,note,29,W-55,{minSize:15});
+   rect(2,560,W-4,38,testMode?black:paper);txt(W/2,586,statusLine,18,W-55,{anchor:'middle',fill:testMode?'#fff':black,minSize:12});
+ }else{
+   rect(2,2,W-4,115,dark?black:paper);if(!dark)line(37,122,W-37,122,4);
+   txt(48,78,heading,62,665,{fill:fg,minSize:23});txt(W-48,78,brand,38,383,{anchor:'end',fill:fg,minSize:14});
+   txt(52,166,'CYLINDER',29,480);txt(W-52,166,'GAS TYPE',29,450,{anchor:'end'});
+   txt(52,228,identifier,52,620,{minSize:20});txt(W-52,228,a.type,49,480,{anchor:'end',minSize:21});line(46,248,W-46,248,4);
+   const mixHasHe=(a.he!==null&&a.he>0)||(trim(m.helium)!==''&&Number(m.helium)>0);
+   if(mixHasHe){
+     txt(70,331,'ANALYZED O₂',31,510);txt(W-70,331,'ANALYZED He',31,510,{anchor:'end'});
+     txt(88,555,validO,205,480,{minSize:72});txt(W-88,555,validHe,205,480,{anchor:'end',minSize:72});
+     txt(86,639,'OXYGEN %',28,495);txt(W-86,639,'HELIUM %',28,495,{anchor:'end'});
+     line(W/2,285,W/2,660,3);
+   }else{
+     txt(W/2,337,'ANALYZED OXYGEN',33,1030,{anchor:'middle'});
+     txt(W/2,568,validO,246,1020,{anchor:'middle',minSize:95});
+     txt(W/2,643,'OXYGEN %',30,1010,{anchor:'middle'});
+   }
+   rect(43,694,W-86,220,dark?black:paper,dark?'none':black,dark?0:5);
+   txt(77,760,'MAX OPERATING DEPTH',38,W-160,{fill:fg,minSize:23});
+   txt(79,873,mod,114,620,{fill:fg,minSize:54});
+   txt(W-77,865,`@ ${m.ppo2} ppO₂`,44,370,{anchor:'end',fill:fg,minSize:18});
+   const meta=[{x:55,w:315,l:'PRESSURE',v:pressure},{x:434,w:308,l:'ANALYSIS DATE',v:day},{x:820,w:328,l:'ANALYZED BY',v:analysedBy}];
+   for(const c of meta){txt(c.x,970,c.l,25,c.w,{minSize:15});txt(c.x,1025,c.v,43,c.w,{minSize:20})}
+   line(48,1050,W-48,1050,3);txt(53,1109,note,38,W-106,{minSize:18});
+   rect(2,1143,W-4,55,testMode?black:paper);
+   txt(W/2,1180,statusLine,24,W-100,{anchor:'middle',fill:testMode?'#fff':black,minSize:14});
+ }
+ return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Cylinder gas label">${el.join('')}</svg>`;
+}
+function render(){
+ const m=read(),a=analyse(m),[w,h]=m.size.split('x').map(Number);
+ modelSVG=svgMake(m,a);$('preview').innerHTML=modelSVG;
+ $('dimensions').textContent=`${w} × ${h} IN · ${m.dpi} DPI`;
+ $('pageRule').textContent=`@page{size:${w}in ${h}in;margin:0}`;
+ $('modStat').textContent=a.mod===null?'—':`${a.mod} ft`;
+ $('n2Stat').textContent=a.n2===null?'—':`${fmt(a.n2)}%`;
+ $('typeStat').textContent=a.type;
+ const prefix=testMode?'TEST LABEL loaded. ':'',messages=a.messages.length?a.messages.join(' '):'MOD calculated using 33 ft/ATA. Confirm actual analyzed gas before diving.';
+ $('notice').textContent=prefix+messages;
+ $('notice').classList.toggle('neutral',a.messages.length===0);
+ $('renderStatus').textContent=testMode?'TEST ONLY. Sample label can be printed, but must not be used to identify breathing gas.':a.good?`Gas: ${a.mix}. All print/export actions are available.`:'Blank or partial labels are printable. Calculated MOD is omitted when gas readings are incomplete or inconsistent.';
+ $('testPill').textContent=testMode?'TEST MODE ACTIVE':'NO TEST LOADED';
+ $('testPill').classList.toggle('on',testMode);
+ $('previewTestBadge').hidden=!testMode;
+ if(!testMode){try{localStorage.setItem(settingsKey,JSON.stringify(m))}catch{}}
+}
+function userChange(id){if(id==='gasMode'){const val=$('gasMode').value;if(val==='nitrox'||val==='air'||val==='oxygen')$('helium').value='0'}render()}
+for(const id of fields){$(id).addEventListener('input',()=>userChange(id));$(id).addEventListener('change',()=>userChange(id))}
+function loadTest(kind){
+ const base={...defaults,size:read().size,dpi:read().dpi,style:read().style,date:dateToday(),ppo2:'1.1',labelStatus:'measured',pressure:'3000',analyzer:'TEST',note:'DEMO / ALIGNMENT TEST'};
+ const sample=kind==='nitrox'
+  ? {...base,gasMode:'nitrox',oxygen:'32.0',helium:'0',cylinder:'TEST-EAN32'}
+  : {...base,gasMode:'trimix',oxygen:'18.0',helium:'45.0',cylinder:'TEST-18-45'};
+ testMode=true;
+ setForm(sample);
+ $('testFeedback').textContent=kind==='nitrox'?'EAN32 TEST loaded: 32% oxygen, 0% helium, 1.1 ppO₂, 80 ft MOD.':'18/45 TEST loaded: 18% oxygen, 45% helium, 1.1 ppO₂, 168 ft MOD.';
+ $('testFeedback').classList.add('loaded');
+ $('demo').textContent='Reload 18/45 TEST';
+}
+$('demo').addEventListener('click',()=>loadTest('trimix'));
+$('quickTrimix').addEventListener('click',()=>loadTest('trimix'));
+$('quickNitrox').addEventListener('click',()=>loadTest('nitrox'));
+$('clear').addEventListener('click',()=>{testMode=false;setForm({...defaults,size:read().size,dpi:read().dpi,style:read().style,date:''});$('testFeedback').textContent='Sample cleared. Enter readings or print a blank label.';$('testFeedback').classList.remove('loaded');$('demo').textContent='Load TEST label'});
+function saveRecent(){const m=read(),a=analyse(m);recent.unshift({data:m,label:(testMode?'TEST · ':'')+a.mix+' · '+(trim(m.cylinder)||'NO ID'),date:dateToday()});recent=recent.slice(0,12);try{localStorage.setItem(histKey,JSON.stringify(recent))}catch{}showHistory()}
+function showHistory(){const list=$('history');list.replaceChildren();if(!recent.length){list.innerHTML='<span class="note">No labels printed or exported yet.</span>';return}for(const item of recent){const btn=document.createElement('button');btn.type='button';const left=document.createElement('span'),right=document.createElement('span');left.textContent=item.label||'LABEL';right.textContent=item.date||'';btn.append(left,right);btn.addEventListener('click',()=>{testMode=(item.label||'').startsWith('TEST · ');setForm({...defaults,...item.data});$('testFeedback').textContent=testMode?'Saved TEST label loaded. Not for diving.':'Saved label loaded.';$('testFeedback').classList.toggle('loaded',testMode);window.scrollTo({top:0,behavior:'smooth'})});list.appendChild(btn)}}
+$('clearHistory').addEventListener('click',()=>{recent=[];try{localStorage.removeItem(histKey)}catch{}showHistory()});
+$('print').addEventListener('click',()=>{const m=read(),[w,h]=m.size.split('x').map(Number);const page=$('pagePrint');page.style.width=w+'in';page.style.height=h+'in';page.innerHTML=modelSVG;saveRecent();window.print()});
+async function makeCanvas(){const m=read(),[w,h]=m.size.split('x').map(Number),dpi=Number(m.dpi);const canvas=document.createElement('canvas');canvas.width=w*dpi;canvas.height=h*dpi;const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
+ const blob=new Blob([modelSVG],{type:'image/svg+xml;charset=utf-8'}),url=URL.createObjectURL(blob);try{const img=new Image();await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=url});ctx.drawImage(img,0,0,canvas.width,canvas.height)}finally{URL.revokeObjectURL(url)}return canvas}
+function download(filename,blob){const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000)}
+function stem(){return 'RUNTIME_'+(trim(read().cylinder)||'GAS_LABEL').replace(/[^\w-]+/g,'_').slice(0,32)+'_'+dateToday()+(testMode?'_TEST':'')}
+$('png').addEventListener('click',async()=>{const btn=$('png');btn.disabled=true;try{const canvas=await makeCanvas();const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));if(!blob)throw new Error('Canvas PNG export failed');if(navigator.share && navigator.canShare){const file=new File([blob],stem()+'.png',{type:'image/png'});if(navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'RunTime Cylinder Gas Analysis Label'})}else{download(file.name,blob)}}else{download(stem()+'.png',blob)}saveRecent()}catch(e){if(e.name!=='AbortError')alert('PNG export issue: '+e.message)}finally{btn.disabled=false}});
+$('zpl').addEventListener('click',async()=>{const btn=$('zpl');btn.disabled=true;btn.textContent='Generating…';try{
+ const canvas=await makeCanvas(),w=canvas.width,h=canvas.height,rgba=canvas.getContext('2d').getImageData(0,0,w,h).data,bytesPerRow=Math.ceil(w/8),total=bytesPerRow*h;
+ const hex=[];for(let y=0;y<h;y++){let row='';for(let x=0;x<bytesPerRow*8;x+=8){let b=0;for(let q=0;q<8;q++){const px=x+q;if(px>=w)continue;const i=(y*w+px)*4;const lum=(rgba[i]*299+rgba[i+1]*587+rgba[i+2]*114)/1000;if(lum<160)b|=(1<<(7-q))}row+=b.toString(16).toUpperCase().padStart(2,'0')}hex.push(row)}
+ const output=`^XA\n^PW${w}\n^LL${h}\n^LH0,0\n^FO0,0^GFA,${total},${total},${bytesPerRow},${hex.join('')}^FS\n^XZ\n`;
+ download(stem()+'.zpl',new Blob([output],{type:'application/octet-stream'}));saveRecent();
+ }catch(e){alert('ZPL export issue: '+e.message)}finally{btn.disabled=false;btn.textContent='Download Zebra ZPL'}});
+const stored=readJSON(storeGet(settingsKey),{});
+setForm({...defaults,...stored});showHistory();runtimeReady();
+})();
+</script>
+</body>
+</html>
